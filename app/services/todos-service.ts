@@ -1,5 +1,5 @@
-import Todo from '../models/todo';
-import { ObservableArray } from 'data/observable-array';
+import Todo from "../models/todo";
+import { ObservableArray } from "data/observable-array";
 
 // A quick and wrapper for application-settings which already behaves very much like HTML5 LocalStorage
 let TodosService = {
@@ -9,18 +9,19 @@ let TodosService = {
         if (value) {
             let rawTodos = <Array<Todo>>JSON.parse(value);
             // we need to convert these raw todos into observables
-            rawTodos.forEach((todo) => {
-                result.push(new Todo(todo.text, todo.completed));
+            rawTodos.forEach(todo => {
+                result.push(new Todo(todo.text, todo.completed, todo.is_new));
             });
             return result;
-        }
-        else return [];
-    },   
-    
+        } else return [];
+    },
+
     set: (key: string, value: ObservableArray<Todo>) => {
-        let todosArray = value.filter(() => { return true });
-        localStorage.setItem(key, JSON.stringify(todosArray));   
+        let todosArray = value.filter(() => {
+            return true;
+        });
+        localStorage.setItem(key, JSON.stringify(todosArray));
     }
-}
+};
 
 export default TodosService;
